@@ -2,10 +2,10 @@
 
 - Fazer um fork do projeto, para o seu github, criar uma branche nova com seu nome para iniciar o teste pratico
 
-## Backend 
+## Back-end 
 
 - Corrija alguns erros que existem dentro da api e a deixe funcional
-- Crie uma tabela de movimentações financeiras e seu crud (Index,show,update,store e delete) correspondente gerenciando as informações pertinentes a um histórico de movimentações que se relaione com a tabela banks
+- Crie uma tabela de movimentações financeiras e seu crud (Index,show,update,store e delete) correspondente gerenciando as informações pertinentes a um histórico de movimentações que se relacione com a tabela banks
 - Crie uma rota que receba o número da conta e retorne suas respectivas movimentações, ordenadas por data descrescente 
 - Crie um mecanismo de autenticação com as ferramentas necessárias e exija um token válido no header para o acesso as demais rotas do sistema (opcional)
 

@@ -35,4 +35,4 @@
 
 ## Envio do Desafio
 
-O repositório deve ser privado e o convite de acesso e informações relevantes devem ser enviados para os emails [**guilherme.andreoti@qyon.com**] e [**vinicius.guimaraes@qyon.com**] com o assunto **Desafio Qyon**
+O repositório deve ser privado e o convite de acesso e informações relevantes devem ser enviados para os emails [**guilherme.andreoti@qyon.com**], [**gabriel.panzeri@qyon.com**] e [**vinicius.guimaraes@qyon.com**] com o assunto **Desafio Qyon**

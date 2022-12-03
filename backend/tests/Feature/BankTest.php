@@ -16,7 +16,8 @@ class BankTest extends TestCase
      */
     public function shouldReturnIndexCounts()
     {
-        $response = $this->get('/api/bank/');
+
+        $response = $this->get('/api/bank/', ["Authorization" => 'Bearer 3|i1lweWFDU8aqXC5RyljyRRjeMbNu4v7rWFpeX4Z3']);
 
         $response->assertStatus(200);
     }
@@ -25,7 +26,7 @@ class BankTest extends TestCase
     {
         $bank = factory(Bank::class, 1)->create();
         $bank_id = $bank->first()->id;
-        $response = $this->get('/api/bank/' . $bank_id);
+        $response = $this->get('/api/bank/' . $bank_id, ["Authorization" => 'Bearer 3|i1lweWFDU8aqXC5RyljyRRjeMbNu4v7rWFpeX4Z3']);
 
         $response->assertStatus(200);
     }
@@ -34,7 +35,7 @@ class BankTest extends TestCase
     {
         $bank = factory(Bank::class, 1)->create();
         $bank_id = $bank->first()->id + 1;
-        $response = $this->get('/api/bank/' . $bank_id);
+        $response = $this->get('/api/bank/' . $bank_id, ["Authorization" => 'Bearer 3|i1lweWFDU8aqXC5RyljyRRjeMbNu4v7rWFpeX4Z3']);
 
         $response->assertStatus(404);
     }
@@ -44,7 +45,7 @@ class BankTest extends TestCase
         $response = $this->post('/api/bank/', [
             'conta' => 'teste',
             'total' => 100.00
-        ]);
+        ], ["Authorization" => 'Bearer 3|i1lweWFDU8aqXC5RyljyRRjeMbNu4v7rWFpeX4Z3']);
 
         $response->assertCreated();
     }
@@ -56,7 +57,7 @@ class BankTest extends TestCase
         $response = $this->post('/api/bank/', [
             'conta' => $conta,
             'total' => 100.00
-        ]);
+        ], ["Authorization" => 'Bearer 3|i1lweWFDU8aqXC5RyljyRRjeMbNu4v7rWFpeX4Z3']);
 
         $response->assertStatus(500);
     }
@@ -69,7 +70,7 @@ class BankTest extends TestCase
         $response = $this->put('/api/bank/' . $bank_id, [
             'conta' => 'teste',
             'total' => 100.00
-        ]);
+        ], ["Authorization" => 'Bearer 3|i1lweWFDU8aqXC5RyljyRRjeMbNu4v7rWFpeX4Z3']);
 
         $response->assertCreated();
     }
@@ -78,7 +79,7 @@ class BankTest extends TestCase
     {
         $bank = factory(Bank::class, 1)->create();
         $bank_id = $bank->first()->id;
-        $response = $this->delete('/api/bank/' . $bank_id);
+        $response = $this->delete('/api/bank/' . $bank_id, [], ["Authorization" => 'Bearer 3|i1lweWFDU8aqXC5RyljyRRjeMbNu4v7rWFpeX4Z3']);
 
         $response->assertStatus(200);
     }
@@ -86,7 +87,7 @@ class BankTest extends TestCase
     public function shouldReturnShowReleasesOfCountById()
     {
         $bank_id = Bank::all()->first()->id;
-        $response = $this->get('/api/bank/' . $bank_id . '/release');
+        $response = $this->get('/api/bank/' . $bank_id . '/release', ["Authorization" => 'Bearer 3|i1lweWFDU8aqXC5RyljyRRjeMbNu4v7rWFpeX4Z3']);
 
         $response->assertStatus(200);
     }

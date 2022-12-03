@@ -17,7 +17,7 @@ class FinancialTransactionTest extends TestCase
      */
     public function shouldReturnIndexFinancialTransactions()
     {
-        $response = $this->get('/api/release/');
+        $response = $this->get('/api/release/', ["Authorization" => 'Bearer 3|i1lweWFDU8aqXC5RyljyRRjeMbNu4v7rWFpeX4Z3']);
 
         $response->assertStatus(200);
     }
@@ -26,7 +26,7 @@ class FinancialTransactionTest extends TestCase
     {
         $FinancialTransaction = factory(FinancialTransaction::class, 1)->create();
         $FinancialTransaction_id = $FinancialTransaction->first()->id;
-        $response = $this->get('/api/release/' . $FinancialTransaction_id);
+        $response = $this->get('/api/release/' . $FinancialTransaction_id, ["Authorization" => 'Bearer 3|i1lweWFDU8aqXC5RyljyRRjeMbNu4v7rWFpeX4Z3']);
 
         $response->assertStatus(200);
     }
@@ -35,7 +35,7 @@ class FinancialTransactionTest extends TestCase
     {
         $FinancialTransaction = factory(FinancialTransaction::class, 1)->create();
         $FinancialTransaction_id = $FinancialTransaction->first()->id + 1;
-        $response = $this->get('/api/release/' . $FinancialTransaction_id);
+        $response = $this->get('/api/release/' . $FinancialTransaction_id, ["Authorization" => 'Bearer 3|i1lweWFDU8aqXC5RyljyRRjeMbNu4v7rWFpeX4Z3']);
 
         $response->assertStatus(404);
     }
@@ -60,7 +60,7 @@ class FinancialTransactionTest extends TestCase
             'conta_id' =>  $FinancialTransaction_id,
             'movimento' => 'withdraw',
             'valor' => 100.00
-        ]);
+        ], ["Authorization" => 'Bearer 3|i1lweWFDU8aqXC5RyljyRRjeMbNu4v7rWFpeX4Z3']);
 
         $response->assertCreated();
     }
@@ -70,7 +70,7 @@ class FinancialTransactionTest extends TestCase
         $response = $this->post('/api/release/', [
             'movimento' => 'withdraw',
             'valor' => 100.00
-        ]);
+        ], ["Authorization" => 'Bearer 3|i1lweWFDU8aqXC5RyljyRRjeMbNu4v7rWFpeX4Z3']);
 
         $response->assertStatus(302);
     }
@@ -83,7 +83,7 @@ class FinancialTransactionTest extends TestCase
         $response = $this->post('/api/release/', [
             'conta_id' => $FinancialTransaction_id,
             'valor' => 100.00
-        ]);
+        ],["Authorization" => 'Bearer 3|i1lweWFDU8aqXC5RyljyRRjeMbNu4v7rWFpeX4Z3']);
 
         $response->assertStatus(302);
     }
@@ -96,7 +96,7 @@ class FinancialTransactionTest extends TestCase
         $response = $this->post('/api/release/', [
             'conta_id' => $FinancialTransaction_id,
             'movimento' => 'withdraw'
-        ]);
+        ], ["Authorization" => 'Bearer 3|i1lweWFDU8aqXC5RyljyRRjeMbNu4v7rWFpeX4Z3']);
 
         $response->assertStatus(302);
     }
@@ -110,7 +110,7 @@ class FinancialTransactionTest extends TestCase
             'conta_id' => $conta_id,
             'movimento' => 'withdraw',
             'valor' => 100.00
-        ]);
+        ], ["Authorization" => 'Bearer 3|i1lweWFDU8aqXC5RyljyRRjeMbNu4v7rWFpeX4Z3']);
 
         $response->assertStatus(500);
     }
@@ -125,7 +125,7 @@ class FinancialTransactionTest extends TestCase
             'conta_id' => $FinancialTransaction_id,
             'movimento' => 'withdraw',
             'valor' => 100.00
-        ]);
+        ],["Authorization" => 'Bearer 3|i1lweWFDU8aqXC5RyljyRRjeMbNu4v7rWFpeX4Z3']);
 
         $response->assertCreated();
     }
@@ -141,7 +141,7 @@ class FinancialTransactionTest extends TestCase
             'conta_id' => $conta_id,
             'movimento' => 'withdraw',
             'valor' => 100.00
-        ]);
+        ], ["Authorization" => 'Bearer 3|i1lweWFDU8aqXC5RyljyRRjeMbNu4v7rWFpeX4Z3']);
 
         $response->assertStatus(404);
     }
@@ -157,7 +157,7 @@ class FinancialTransactionTest extends TestCase
             'conta_id' => $conta_id,
             'movimento' => 'withdraw',
             'valor' => 100.00
-        ]);
+        ], ["Authorization" => 'Bearer 3|i1lweWFDU8aqXC5RyljyRRjeMbNu4v7rWFpeX4Z3']);
 
         $response->assertStatus(500);
     }
@@ -166,7 +166,7 @@ class FinancialTransactionTest extends TestCase
     {
         $FinancialTransaction = factory(FinancialTransaction::class, 1)->create();
         $FinancialTransaction_id = $FinancialTransaction->first()->id;
-        $response = $this->delete('/api/release/' . $FinancialTransaction_id);
+        $response = $this->delete('/api/release/' . $FinancialTransaction_id, [], ["Authorization" => 'Bearer 3|i1lweWFDU8aqXC5RyljyRRjeMbNu4v7rWFpeX4Z3']);
 
         $response->assertStatus(200);
     }
@@ -176,7 +176,7 @@ class FinancialTransactionTest extends TestCase
 
         $FinancialTransaction = factory(FinancialTransaction::class, 1)->create();
         $FinancialTransaction_id = $FinancialTransaction->first()->id + 1;
-        $response = $this->delete('/api/release/' . $FinancialTransaction_id);
+        $response = $this->delete('/api/release/' . $FinancialTransaction_id,[], ["Authorization" => 'Bearer 3|i1lweWFDU8aqXC5RyljyRRjeMbNu4v7rWFpeX4Z3']);
 
         $response->assertStatus(404);
     }

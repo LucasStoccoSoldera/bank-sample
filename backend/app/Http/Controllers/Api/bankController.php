@@ -113,59 +113,6 @@ class bankController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\bank  $bank
-     * @return \Illuminate\Http\Response
-     */
-    public function addRelease(Request $request)
-    {
-        try{
-            if(!$request->conta_id){
-                return response()->json(ApiError::errorMessage("conta_id não informada!", 1030), 500);
-            }
-
-            if(!$request->movimento){
-                return response()->json(ApiError::errorMessage("movimento não informado!", 1030), 500);
-            }
-
-            $bank =  $this->bank->find($request->conta_id);
-                if(!$bank){
-                    return response()->json(ApiError::errorMessage("Conta não localizada com a conta_id {$request->conta_id}!", 1030), 500);
-                }
-
-            $total_anterior=$bank->total;
-
-            if($request->movimento == "deposit"){
-                $bank->total = $bank->total+$request->valor;
-            }
-
-            if($request->movimento == "withdraw"){
-                $bank->total = $bank->total-$request->valor;
-            }
-
-
-            $bank->save();
-
-                $return = [
-                    'data'=> [
-                        'msg' => "{$request->movimento} realizado. Total anterior:{$total_anterior}. Valor Movimentado:{$request->valor}. Total Atual:{$bank->total}."
-                    ]
-                ];
-
-            return response()->json($return, 201);
-
-        } catch(\Exception $e){
-            if(config('app.debug')){
-                return response()->json(ApiError::errorMessage($e->getMessage(), 1010), 500);
-            }
-
-            return response()->json(ApiError::errorMessage('Houve um erro ao realizar a operação de atualizar', 1011), 500);
-        }
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\bank  $bank

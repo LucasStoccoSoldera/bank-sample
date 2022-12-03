@@ -28,8 +28,15 @@ Route::prefix('bank')->group(function () {
     Route::post('/',         [\App\Http\Controllers\Api\bankController::class, 'store'])      ->name('storeBank');
     Route::put('/{id}',      [\App\Http\Controllers\Api\bankController::class, 'update'])     ->name('updateBank');
     Route::delete('/{id}',   [\App\Http\Controllers\Api\bankController::class, 'destroy'])    ->name('deleteBank');
+});
 
-    Route::post('release/',  [\App\Http\Controllers\Api\bankController::class, 'addRelease']) ->name('addRelease');
+Route::prefix('release')->group(function () {
+    Route::get('/',          [\App\Http\Controllers\Api\FinancialTransactionController::class, 'index'])      ->name('allBanks');
+    Route::get('/{id}',      [\App\Http\Controllers\Api\FinancialTransactionController::class, 'show'])       ->name('showBank');
+    Route::post('/',         [\App\Http\Controllers\Api\FinancialTransactionController::class, 'store'])      ->name('storeBank');
+    Route::put('/{id}',      [\App\Http\Controllers\Api\FinancialTransactionController::class, 'update'])     ->name('updateBank');
+    Route::delete('/{id}',   [\App\Http\Controllers\Api\FinancialTransactionController::class, 'destroy'])    ->name('deleteBank');
+   // Route::apiResource('/', Api\FinancialTransactionController::class);
 });
 
 

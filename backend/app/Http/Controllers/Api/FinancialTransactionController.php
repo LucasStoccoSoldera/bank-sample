@@ -7,11 +7,13 @@ use App\Models\FinancialTransaction;
 use App\Models\Bank;
 use App\Http\Requests\FinancialTransactionRequest;
 use App\API\ApiError;
+use App\API\Api;
 
 class FinancialTransactionController extends Controller
 {
 
     private $financialTransaction;
+    private $bank;
 
     public function __construct(FinancialTransaction $financialTransaction, Bank $bank){
         $this->financialTransaction = $financialTransaction;
@@ -21,7 +23,7 @@ class FinancialTransactionController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Json
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
@@ -32,7 +34,7 @@ class FinancialTransactionController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  FinancialTransaction  $financialTransaction
-     * @return Json
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(FinancialTransactionRequest $financialTransactionRequest)
     {
@@ -53,16 +55,9 @@ class FinancialTransactionController extends Controller
                 $bank->total = $bank->total-$financialTransactionRequest->valor;
             }
 
-
             $bank->save();
 
-                $return = [
-                    'data'=> [
-                        'msg' => "{$financialTransactionRequest->movimento} realizado. Total anterior:{$total_anterior}. Valor Movimentado:{$financialTransactionRequest->valor}. Total Atual:{$bank->total}."
-                    ]
-                ];
-
-            return response()->json($return, 201);
+            return response()->json(Api::genericResponse("{$financialTransactionRequest->movimento} realizado. Total anterior:{$total_anterior}. Valor Movimentado:{$financialTransactionRequest->valor}. Total Atual:{$bank->total}."), 201);
 
         } catch(\Exception $e){
             if(config('app.debug')){
@@ -77,7 +72,7 @@ class FinancialTransactionController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return Json
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
@@ -86,11 +81,7 @@ class FinancialTransactionController extends Controller
             return response()->json(ApiError::errorMessage('Transação não encontrada!', 4040), 404);
         }
 
-        $data = [
-            'data' => $financialTransaction
-        ];
-
-        return response()->json($data);
+        return response()->json(Api::financialTransactionShowResponse($financialTransaction));
     }
 
     /**
@@ -98,7 +89,7 @@ class FinancialTransactionController extends Controller
      *
      * @param  FinancialTransaction  $financialTransaction
      * @param  int  $id
-     * @return Json
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(FinancialTransactionRequest $financialTransactionRequest, $id)
     {
@@ -112,13 +103,7 @@ class FinancialTransactionController extends Controller
 
             $financialTransaction->update($financialTransactionData);
 
-                $return = [
-                    'data'=> [
-                        'msg' => 'Transação alterada com sucesso!'
-                    ]
-                ];
-
-            return response()->json($return, 201);
+            return response()->json(Api::genericResponse('Transação alterada com sucesso!'), 201);
 
         } catch(\Exception $e){
             if(config('app.debug')){
@@ -133,7 +118,7 @@ class FinancialTransactionController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return Json
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
@@ -145,11 +130,7 @@ class FinancialTransactionController extends Controller
 
             $financialTransaction->delete();
 
-            return response()->json([
-                'data' => [
-                    'msg' => 'Transação: '.$financialTransaction->id.' removido com sucesso!'
-                ]
-            ],200);
+            return response()->json(Api::genericResponse('Transação: '.$financialTransaction->id.' removido com sucesso!'),200);
 
         }catch(\Exception $e){
             if(config('app.debug')){

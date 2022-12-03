@@ -36,9 +36,9 @@ class FinancialTransactionRequest extends FormRequest
     public function messages()
     {
         return [
-            'conta_id.required' => 'Count/Bank Id is mandatory.',
-            'movimento.required' => 'Moviment is mandatory.',
-            'valor.required' => 'Valor is mandatory.',
+            'conta_id.required' => 'Conta obrigatória.',
+            'movimento.required' => 'Movimento obrigatório.',
+            'valor.required' => 'Valor obrigatório.'
         ];
     }
 }

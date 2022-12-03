@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\bank;
 use Illuminate\Http\Request;
 use App\API\ApiError;
+use App\API\Api;
 use App\Models\FinancialTransaction;
 
 class bankController extends Controller
@@ -20,7 +21,7 @@ class bankController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
@@ -31,7 +32,7 @@ class bankController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -44,13 +45,7 @@ class bankController extends Controller
 
             $this->bank->create($bankData);
 
-            $return = [
-                "data"=> [
-                    "msg" => "A conta {$request->conta} foi criada com sucesso!"
-                ]
-            ];
-
-            return response()->json($return, 201);
+            return response()->json(Api::genericResponse("A conta {$request->conta} foi criada com sucesso!"), 201);
 
         } catch(\Exception $e){
             if(config('app.debug')){
@@ -65,7 +60,7 @@ class bankController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\bank  $bank
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
@@ -74,18 +69,14 @@ class bankController extends Controller
             return response()->json(ApiError::errorMessage('Conta não encontrada!', 4040), 404);
         }
 
-        $data = [
-            'bank' => $bank
-        ];
-
-        return response()->json($data);
+        return response()->json(Api::bankShowResponse($bank));
     }
 
         /**
      * Display the specified resource.
      *
      * @param  \App\Models\bank  $bank
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function showFinancialTransaction($id)
     {
@@ -96,11 +87,7 @@ class bankController extends Controller
 
         $financialTransactions = FinancialTransaction::where('conta_id', $id)->orderByDesc('created_at')->get();
 
-        $data = [
-            'releases' => $financialTransactions
-        ];
-
-        return response()->json($data);
+        return response()->json(Api::bankShowResponse($financialTransactions));
     }
 
     /**
@@ -108,7 +95,7 @@ class bankController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\bank  $bank
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id)
     {
@@ -118,13 +105,7 @@ class bankController extends Controller
 
             $bank->update($bankData);
 
-                $return = [
-                    'data'=> [
-                        'msg' => 'Conta alterada com sucesso!'
-                    ]
-                ];
-
-            return response()->json($return, 201);
+            return response()->json(Api::genericResponse('Conta alterada com sucesso!'), 201);
 
         } catch(\Exception $e){
             if(config('app.debug')){
@@ -139,18 +120,14 @@ class bankController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\bank  $bank
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(bank $id)
     {
         try{
             $id->delete();
 
-            return response()->json([
-                'data' => [
-                    'msg' => 'Conta: '.$id->id.' removido com sucesso!'
-                ]
-            ],200);
+            return response()->json(Api::genericResponse('Conta: '.$id->id.' removido com sucesso!'),200);
 
         }catch(\Exception $e){
             if(config('app.debug')){

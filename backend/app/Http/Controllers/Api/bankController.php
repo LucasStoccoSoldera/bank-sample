@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\bank;
 use Illuminate\Http\Request;
 use App\API\ApiError;
+use App\Models\FinancialTransaction;
 
 class bankController extends Controller
 {
@@ -74,7 +75,29 @@ class bankController extends Controller
         }
 
         $data = [
-            'data' => $bank
+            'bank' => $bank
+        ];
+
+        return response()->json($data);
+    }
+
+        /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\bank  $bank
+     * @return \Illuminate\Http\Response
+     */
+    public function showFinancialTransaction($id)
+    {
+        $bank = $this->bank->find($id);
+        if(!$bank){
+            return response()->json(ApiError::errorMessage('Conta não encontrada!', 4040), 404);
+        }
+
+        $financialTransactions = FinancialTransaction::where('conta_id', $id)->orderByDesc('created_at')->get();
+
+        $data = [
+            'releases' => $financialTransactions
         ];
 
         return response()->json($data);

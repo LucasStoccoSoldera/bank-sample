@@ -82,4 +82,12 @@ class BankTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function shouldReturnShowReleasesOfCountById()
+    {
+        $bank_id = Bank::all()->first()->id;
+        $response = $this->get('/api/bank/release' . $bank_id);
+
+        $response->assertStatus(200);
+    }
 }

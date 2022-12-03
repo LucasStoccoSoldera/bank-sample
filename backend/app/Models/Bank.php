@@ -12,7 +12,7 @@ class Bank extends Model
         'conta', 'total'
     ];
 
-    public function financialTransaction(){
+    public function financialTransactions(){
         return $this->belongsTo(FinancialTransaction::class);
     }
 

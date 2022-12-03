@@ -28,6 +28,8 @@ Route::prefix('bank')->group(function () {
     Route::post('/',         [\App\Http\Controllers\Api\bankController::class, 'store'])      ->name('storeBank');
     Route::put('/{id}',      [\App\Http\Controllers\Api\bankController::class, 'update'])     ->name('updateBank');
     Route::delete('/{id}',   [\App\Http\Controllers\Api\bankController::class, 'destroy'])    ->name('deleteBank');
+
+    Route::get('/release/{id}',      [\App\Http\Controllers\Api\bankController::class, 'showFinancialTransaction'])       ->name('showFinancialTransaction');
 });
 
 Route::prefix('release')->group(function () {

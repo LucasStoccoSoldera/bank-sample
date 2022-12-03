@@ -14,20 +14,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
 Route::get('/', function () {
     return "Enjoy the Silence...";
 });
 
-Route::prefix('banco')->group(function () {
-    Route::get('/',          'Api\\bankController@index')     ->name('allBanks');
-    Route::get('/{id}',      'Api\\bankController@show')      ->name('showBank');
-    Route::post('/',         'Api\\bankController@store')     ->name('storeBank');
-    Route::put('/{id}',      'Api\\bankController@update')    ->name('updateBank');
-    Route::delete('/{id}',   'Api\\bankController@destroy')   ->name('deleteBank');
+Route::prefix('bank')->group(function () {
+    Route::get('/',          [\App\Http\Controllers\Api\bankController::class, 'index'])      ->name('allBanks');
+    Route::get('/{id}',      [\App\Http\Controllers\Api\bankController::class, 'show'])       ->name('showBank');
+    Route::post('/',         [\App\Http\Controllers\Api\bankController::class, 'store'])      ->name('storeBank');
+    Route::put('/{id}',      [\App\Http\Controllers\Api\bankController::class, 'update'])     ->name('updateBank');
+    Route::delete('/{id}',   [\App\Http\Controllers\Api\bankController::class, 'destroy'])    ->name('deleteBank');
 
-    Route::post('release/',  'Api\\bankController@addRelease')->name('storeBank');
+    Route::post('release/',  [\App\Http\Controllers\Api\bankController::class, 'addRelease']) ->name('addRelease');
 });
+
+

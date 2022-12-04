@@ -101,9 +101,36 @@ class FinancialTransactionController extends Controller
                 return response()->json(ApiError::errorMessage('Transação não encontrada!', 4040), 404);
             }
 
-            $financialTransaction->update($financialTransactionData);
 
-            return response()->json(Api::genericResponse('Transação alterada com sucesso!'), 201);
+            $bank =  $this->bank->find($financialTransactionRequest->conta_id);
+            if(!$bank){
+                return response()->json(ApiError::errorMessage("Conta não localizada com a conta_id {$financialTransactionRequest->conta_id}!", 1030), 500);
+            }
+
+            $total_anterior = $bank->total;
+
+            if($financialTransaction->movimento == "deposit"){
+                $bank->total = $bank->total-$financialTransaction->valor;
+            }
+
+            if($financialTransaction->movimento == "withdraw"){
+                $bank->total = $bank->total+$financialTransaction->valor;
+            }
+
+            $total_pre_movimento = $bank->total;
+
+            if($financialTransactionRequest->movimento == "deposit"){
+                $bank->total = $bank->total+$financialTransactionRequest->valor;
+            }
+
+            if($financialTransactionRequest->movimento == "withdraw"){
+                $bank->total = $bank->total-$financialTransactionRequest->valor;
+            }
+
+            $financialTransaction->update($financialTransactionData);
+            $bank->save();
+
+            return response()->json(Api::genericResponse("{$financialTransactionRequest->movimento} realizado. Total pré movimentação original:{$total_pre_movimento}. Total anterior:{$total_anterior}. Valor Movimentado:{$financialTransactionRequest->valor}. Total Atual:{$bank->total}."), 201);
 
         } catch(\Exception $e){
             if(config('app.debug')){
@@ -128,9 +155,26 @@ class FinancialTransactionController extends Controller
                 return response()->json(ApiError::errorMessage('Transação não encontrada!', 4040), 404);
             }
 
+            $bank =  $this->bank->find($financialTransaction->conta_id);
+            if(!$bank){
+                return response()->json(ApiError::errorMessage("Conta não localizada com a conta_id {$financialTransaction->conta_id}!", 1030), 500);
+            }
+
+            $total_anterior = $bank->total;
+
+            if($financialTransaction->movimento == "deposit"){
+                $bank->total = $bank->total-$financialTransaction->valor;
+            }
+
+            if($financialTransaction->movimento == "withdraw"){
+                $bank->total = $bank->total+$financialTransaction->valor;
+            }
+
+            $bank->save();
             $financialTransaction->delete();
 
-            return response()->json(Api::genericResponse('Transação: '.$financialTransaction->id.' removido com sucesso!'),200);
+            return response()->json(Api::genericResponse("Transação:$financialTransaction->id removida com sucesso!
+            $financialTransaction->movimento de $financialTransaction->valor revertido. Total atual:$bank->total."),200);
 
         }catch(\Exception $e){
             if(config('app.debug')){

@@ -1,3 +1,9 @@
+<p align="center"> #Atividade Full Stack </p>
+
+Desenvolvido durante um processo seletivo com o propóstito de criar um ambiente funcional integrado cujo backend seja Laravel e o frontend React. 
+
+**Descrição:**
+
 ## Tarefa pratica e logica:
 
 - [x] Fazer um fork do projeto, para o seu github, criar uma branche nova com seu nome para iniciar o teste pratico
@@ -17,7 +23,7 @@
 - [x] Arquitetura em camadas (ou Hexagonal)
 - [x] Testes unitários.
 - [x] Ambiente docker
-- [?] Crie uma documentação para o projeto no readme 
+- [x] Crie uma documentação para o projeto no readme 
 
 ## Front-end
  Listar contas e seus respectivos saldos e, em uma segunda tela o extrato bancário de um banco selecionado na tela anterior 

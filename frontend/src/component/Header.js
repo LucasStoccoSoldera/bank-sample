@@ -1,8 +1,3 @@
-import '../App.css';
-import {useState, useEffect} from 'react';
-import api from '../services/api';
-import BankList from '../component/BankList';
-
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
@@ -22,43 +17,19 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme();
 
-const Bank = () => {
-
-  const[banks, setBanks] = useState([]);
-  
-  useEffect(() =>{ 
-    api.get('bank').then(res =>
-    {
-      setBanks(res.data.data);
-    })
-  });
-
+const Header = () => {
     return (
         <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Box
-          sx={{
-            bgcolor: 'background.paper',
-            pt: 8,
-            pb: 6,
-          }}
-        >
-          <Container sx={{display:'table'}} maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h2"
-              align="center"
-              color="text.primary"
-              gutterBottom
-            >
-              Contas
+        <AppBar position="relative">
+          <Toolbar>
+            <Typography variant="h6" color="inherit" noWrap>
+                Bank Sample Principal
             </Typography>
-            {banks && <BankList banks={banks}/>}
-            
-          </Container>
-        </Box>
+          </Toolbar>
+        </AppBar>
         </ThemeProvider>
     );
   }
   
-  export default Bank;
+  export default Header;

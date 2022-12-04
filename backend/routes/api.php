@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
- Route::group(['middleware' => ['auth:sanctum']], function () {
+ //Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::prefix('auth')->group(function () {
         Route::post('logout',          [\App\Http\Controllers\Auth\Api\LoginController::class, 'logout'])                      ->name('logout');
@@ -38,7 +38,7 @@ use Illuminate\Support\Facades\Route;
         Route::delete('/{id}',   [\App\Http\Controllers\Api\FinancialTransactionController::class, 'destroy'])                 ->name('deleteBank');
         // Route::apiResource('/', Api\FinancialTransactionController::class);
     });
- });
+ //});
 
 Route::get('/', function () {
     return "Enjoy the Silence...";

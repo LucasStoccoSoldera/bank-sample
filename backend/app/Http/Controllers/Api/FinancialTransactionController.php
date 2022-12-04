@@ -39,7 +39,6 @@ class FinancialTransactionController extends Controller
     public function store(FinancialTransactionRequest $financialTransactionRequest)
     {
         try{
-
             $bank =  $this->bank->find($financialTransactionRequest->conta_id);
                 if(!$bank){
                     return response()->json(ApiError::errorMessage("Conta não localizada com a conta_id {$financialTransactionRequest->conta_id}!", 1030), 500);
@@ -56,6 +55,8 @@ class FinancialTransactionController extends Controller
             }
 
             $bank->save();
+            $financialTransactioData = $financialTransactionRequest->all();
+            $this->financialTransaction->create($financialTransactioData);
 
             return response()->json(Api::genericResponse("{$financialTransactionRequest->movimento} realizado. Total anterior:{$total_anterior}. Valor Movimentado:{$financialTransactionRequest->valor}. Total Atual:{$bank->total}."), 201);
 

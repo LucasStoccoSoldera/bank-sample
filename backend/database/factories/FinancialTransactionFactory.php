@@ -8,11 +8,12 @@ use Faker\Generator as Faker;
 
 $factory->define(FinancialTransaction::class, function (Faker $faker) {
 
-    $movimento = array_rand(['deposit', 'withdraw']);
+    $opcoes = ['deposit', 'withdraw'];
+    $movimento = array_rand($opcoes);
 
     return [
         'conta_id' => Bank::all()->random()->id,
-        'movimento' => $movimento,
+        'movimento' => $opcoes[$movimento],
         'valor' => $this->faker->randomFloat(2,10,1000),
     ];
 });

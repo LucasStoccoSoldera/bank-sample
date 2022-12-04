@@ -87,7 +87,7 @@ class bankController extends Controller
 
         $financialTransactions = FinancialTransaction::where('conta_id', $id)->orderByDesc('created_at')->get();
 
-        return response()->json(Api::bankShowResponse($financialTransactions));
+        return response()->json(Api::financialTransactionShowResponse($financialTransactions));
     }
 
     /**

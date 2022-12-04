@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class FinancialTransaction extends Model
 {
     protected $fillable = [
-        'conta_id', 'movimento', 'total'
+        'conta_id', 'movimento', 'valor'
     ];
 
     public function banks()

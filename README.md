@@ -1,10 +1,10 @@
-<p align="center"> #Atividade Full Stack </p>
+# <p align="center">Atividade Full Stack </p>
 
-Desenvolvido durante um processo seletivo com o propóstito de criar um ambiente funcional integrado cujo backend seja Laravel e o frontend React. 
+><p align="center"> Desenvolvido durante um processo seletivo com o propóstito de criar um ambiente funcional integrado cujo backend seja Laravel e o frontend React.</p> 
+<br>
 
-**Descrição:**
 
-## Tarefa pratica e logica:
+## Descrição:
 
 - [x] Fazer um fork do projeto, para o seu github, criar uma branche nova com seu nome para iniciar o teste pratico
 

@@ -52,7 +52,7 @@ const BankList = ({banks}) => {
                     <StyledTableRow key={bank.id}>
                     <StyledTableCell align="left">{bank.id}</StyledTableCell>
                     <StyledTableCell align="left">{bank.conta}</StyledTableCell>
-                    <StyledTableCell align="right">{bank.total}</StyledTableCell>
+                    <StyledTableCell align="right">{bank.total.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</StyledTableCell>
                     <StyledTableCell align="right"><Button onClick={() => {
                                     navigate('/bank/'+ bank.id +'/release')
                                 }} type="button" variant="contained"><EditIcon/></Button></StyledTableCell>

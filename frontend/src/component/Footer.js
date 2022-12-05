@@ -36,7 +36,7 @@ const Footer = () => {
           color="text.secondary"
           component="p"
         >
-        Minha primeira aplicação em ReactJS.
+        Minha primeira aplicação em ReactJS. É simples mas é de coração.
             </Typography>
                     <Typography
           variant="subtitle1"

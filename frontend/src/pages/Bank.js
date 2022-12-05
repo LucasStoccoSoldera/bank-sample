@@ -1,5 +1,5 @@
 import '../App.css';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import api from '../services/api';
 import BankList from '../component/BankList';
 
@@ -16,14 +16,17 @@ const Bank = () => {
 
   const[banks, setBanks] = useState([]);
   
+  const fetchData = useCallback(async () => {
+    const data = await api.get('bank').then(res =>
+    {
+      setBanks(res.data.data);
+    });
+  }, []);
+  
   useEffect(() =>{ 
-    const fetchData = async () => {
-      const data = await api.get('bank').then(res =>
-      {
-        setBanks(res.data.data);
-      })
-    }
-  });
+    fetchData()
+    .catch(console.error);
+  }, [fetchData]);
 
     return (
         <ThemeProvider theme={theme}>

@@ -1,6 +1,6 @@
 import '../App.css';
-import {useState, useEffect} from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import {useState, useEffect, useCallback } from 'react';
+import { useParams, useNavigate} from 'react-router-dom';
 import api from '../services/api';
 import BankReleaseList from '../component/BankReleaseList';
 import * as React from 'react';
@@ -21,14 +21,17 @@ function Release() {
     let {id} = useParams()
     const url = 'bank/' + id + '/release';
 
-    useEffect(() =>{
-      const fetchData = async () => {
-        const data = await api.get(url).then(res =>
+    const fetchData = useCallback(async () => {
+      const data = await api.get(url).then(res =>
         {
           setReleases(res.data.financialTransactions);
-        })
-     }
-    });
+        });
+    }, []);
+
+    useEffect(() =>{ 
+      fetchData()
+      .catch(console.error);
+    }, [fetchData]);
   
     return (
       <ThemeProvider theme={theme}>

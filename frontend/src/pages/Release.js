@@ -21,11 +21,13 @@ function Release() {
     let {id} = useParams()
     const url = 'bank/' + id + '/release';
 
-    useEffect(() =>{ 
-      api.get(url).then(res =>
-      {
-        setReleases(res.data.financialTransactions);
-      })
+    useEffect(() =>{
+      const fetchData = async () => {
+        const data = await api.get(url).then(res =>
+        {
+          setReleases(res.data.financialTransactions);
+        })
+     }
     });
   
     return (

@@ -17,10 +17,12 @@ const Bank = () => {
   const[banks, setBanks] = useState([]);
   
   useEffect(() =>{ 
-    api.get('bank').then(res =>
-    {
-      setBanks(res.data.data);
-    })
+    const fetchData = async () => {
+      const data = await api.get('bank').then(res =>
+      {
+        setBanks(res.data.data);
+      })
+    }
   });
 
     return (

@@ -38,6 +38,7 @@ const BankReleaseList = ({releases}) => {
                 <TableHead>
                 <TableRow>
                     <StyledTableCell align="left">Data</StyledTableCell>
+                    <StyledTableCell align="left">Hora</StyledTableCell>
                     <StyledTableCell align="left">Tipo</StyledTableCell>
                     <StyledTableCell align="right">Valor</StyledTableCell>
                 </TableRow>
@@ -45,9 +46,10 @@ const BankReleaseList = ({releases}) => {
                 <TableBody>
                 {releases.map((release) => (
                     <StyledTableRow key={release.id}>
-                    <StyledTableCell align="left">{release.created_at}</StyledTableCell>
-                    <StyledTableCell align="left">{release.movimento}</StyledTableCell>
-                    <StyledTableCell align="right">{release.valor}</StyledTableCell>
+                      <StyledTableCell align="left">{new Date(release.created_at).toLocaleDateString('pt-BR')}</StyledTableCell>
+                      <StyledTableCell align="left">{new Date(release.created_at).toLocaleTimeString('pt-BR')}</StyledTableCell>
+                      <StyledTableCell align="left">{release.movimento}</StyledTableCell>
+                      <StyledTableCell align="right">{release.valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</StyledTableCell>
                     </StyledTableRow>
                 ))}
                 </TableBody>

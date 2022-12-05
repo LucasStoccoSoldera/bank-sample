@@ -1,0 +1,34 @@
+version: "3.7"
+
+services:
+    # image project
+    api-frontend:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: api-frontend
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+        depends_on:
+            - mysql
+        networks:
+            - stack
+
+    # nginx
+    nginx:
+        image: nginx:alpine
+        container_name: nginx
+        restart: unless-stopped
+        ports:
+            - "8989:80"
+        volumes:
+            - ./:/var/www
+            - ./nginx/:/etc/nginx/conf.d/
+        networks:
+            - stack
+
+networks:
+    frontend:
+        driver: bridge
